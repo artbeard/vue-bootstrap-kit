@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import {ref, reactive} from "vue";
 
-import Button from "./components/button/Button.vue";
+//import Button from "./components/button/Button.vue";
 import SlimSelect, {type ISelectOptionInterface} from "./components/select/SlimSelect.vue";
 import DropDownMenu from "./components/dropdown/DropDownMenu.vue";
 import Popover from "./components/popover/Popover.vue";
 import Modal from "./components/modal/Modal.vue";
-import Jodit from "./components/wysiwyg/Jodit.vue";
+import Jodit from "./components/wysiwyg/jodit.vue";
 import Pagination from "./components/pagination/Pagination.vue";
 import TabPanel from "./components/tab/TabPanel.vue";
 import Tab from "./components/tab/Tab.vue";
