@@ -12,7 +12,7 @@ import TabPanel from "./components/tab/TabPanel.vue";
 import Tab from "./components/tab/Tab.vue";
 import Flatpickr from "./components/datepicker/Flatpickr.vue";
 import Offcanvas from "./components/offcanvas/Offcanvas.vue";
-
+import viCalendar from "./components/calendar/vi-calendar.vue";
 
 
 
@@ -116,7 +116,20 @@ const clearSelected = function ()
 
 		<div class="page-body">
 			<div class="container-xl">
+				<div class="row row-cards mb-3">
+					<div class="col-3">
+						<div class="card">
+							<div class="card-body">управление</div>
+						</div>
+
+					</div>
+					<div class="col-9">
+						<vi-calendar></vi-calendar>
+					</div>
+				</div>
 				<div class="row row-cards">
+
+
 					<div class="card">
 						<div class="card-body">
 							<div class="row">
