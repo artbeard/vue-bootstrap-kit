@@ -67,6 +67,11 @@ const clearSelected = function ()
 	slimSelectVal2.value = [];
 }
 
+
+
+const displayDate = ref<string>()
+
+
 </script>
 
 <template>
@@ -119,12 +124,19 @@ const clearSelected = function ()
 				<div class="row row-cards mb-3">
 					<div class="col-3">
 						<div class="card">
-							<div class="card-body">управление</div>
+							<div class="card-body">
+								<div class="mb-3">
+									<label class="form-label required">Дата</label>
+									<div>
+										<input type="date" class="form-control" v-model="displayDate">
+									</div>
+								</div>
+							</div>
 						</div>
 
 					</div>
 					<div class="col-9">
-						<vi-calendar></vi-calendar>
+						<vi-calendar :date="displayDate"></vi-calendar>
 					</div>
 				</div>
 				<div class="row row-cards">

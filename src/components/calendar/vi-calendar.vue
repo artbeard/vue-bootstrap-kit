@@ -13,6 +13,7 @@
 			<div class="vi-day">
 				<div class="vi-day_num">26</div>
 				<div class="vi-day_content">
+					{{getDisplayDate}}
 				</div>
 			</div>
 			<div class="vi-day">
@@ -75,10 +76,74 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
-
+import {defineComponent} from 'vue';
+import type { PropType } from 'vue';
 export default defineComponent({
-	name: 'vi-calendar'
+	name: 'vi-calendar',
+
+	data(){ return {
+
+		dateMatrix: [],
+
+	}},
+
+	props: {
+		date: {
+			type: [String, Date],// Object as PropType<Date | string>
+			default(){
+				return new Date();
+			}
+		},
+	},
+
+	watch: {
+		getDisplayDate(newVal, oldVal)
+		{
+			console.log('Пересчитываем матрицу дат для ', newVal);
+			const firstDate = new Date(newVal.getFullYear(), newVal.getMonth(), 1);
+			let rewindDays = (firstDate.getDay() == 0 ? 7 : firstDate.getDay()) - 1;
+			let countDays = 33 - new Date(firstDate.getFullYear(), firstDate.getMonth(), 33).getDate()
+			let countDisplayDays = Math.ceil((rewindDays + countDays) / 7);
+
+
+			firstDate.setDate(firstDate.getDate() - rewindDays);
+			console.log(firstDate.toLocaleDateString(), firstDate.getDay(),
+				countDays,
+				countDisplayDays
+			)
+		}
+	},
+
+	computed: {
+		getDisplayDate(): Date
+		{
+			if (typeof this.date === 'string')
+			{
+				let _date = new Date(this.date);
+				if (isNaN(_date.valueOf()))
+				{
+					console.error('Date prop is invalid: ', this.date);
+					return new Date();
+				}
+				return _date;
+			}
+			else
+			{
+				return <Date>this.date;
+			}
+		}
+	},
+
+	methods: {
+		generateNewMatrix()
+		{
+			function * matrixGenerator(start, count)
+			{
+
+			}
+		},
+	},
+
 })
 </script>
 
