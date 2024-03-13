@@ -1,65 +1,56 @@
 <template>
-	<pre>{{dateMatrix.length}},{{dateMatrix}}, {{ dateMatrix[35] }}</pre>
-	<div>
-		<span class="px-1" v-for="day in dateMatrix">{{day.getDate()}}</span>
-	</div>
+<!--	<pre>{{dateMatrix.length}},{{dateMatrix}}, {{ dateMatrix[35] }}</pre>-->
+<!--	<div>-->
+<!--		<span class="px-1" v-for="day in dateMatrix">{{day.getDate()}}</span>-->
+<!--	</div>-->
 	<div class="vi-calendar">
 		<div class="vi-weak-control">
-			<div class="vi-day">пн</div>
-			<div class="vi-day">вт</div>
-			<div class="vi-day">ср</div>
-			<div class="vi-day">чт</div>
-			<div class="vi-day">пт</div>
-			<div class="vi-day">сб</div>
-			<div class="vi-day">ВС</div>
+			<div class="vi-day bg-light"><strong>пн</strong></div>
+			<div class="vi-day bg-light"><strong>вт</strong></div>
+			<div class="vi-day bg-light"><strong>ср</strong></div>
+			<div class="vi-day bg-light"><strong>чт</strong></div>
+			<div class="vi-day bg-light"><strong>пт</strong></div>
+			<div class="vi-day bg-light text-red"><strong>сб</strong></div>
+			<div class="vi-day bg-light text-red"><strong>вс</strong></div>
 		</div>
 
 		<template v-for="i in (dateMatrix.length/7 + 1)">
 			<div class="vi-weak">
-				<div class="vi-day" v-for="(day, index) in dateMatrix.slice((i-1) * 7, (i-1) * 7 + 7)" :key="`${day.getDate()}_${day.getMonth()}`">
-					<div class="vi-day_num">{{day.getDate()}}</div>
+				<div class="vi-day"
+				     v-for="(day, index) in dateMatrix.slice((i-1) * 7, (i-1) * 7 + 7)"
+				     :key="`${day.getDate()}_${day.getMonth()}`"
+				     :class="{
+						 'bg-light': isCurrentMonth(day),
+						 'border-azure': isCurrentDay(day)
+				     }"
+				>
+					<div class="vi-day_num">
+						<div class="badge"
+						     :class="{ 'bg-red-lt': isWeekEnd(day), 'bg-dark-lt': !isWeekEnd(day)}"
+						>
+							{{day.getDate()}}
+						</div>
+					</div>
 					<div class="vi-day_content">
-						{{index}},
-						{{ (i - 1) * 7 }} - {{ (i - 1) * 7 + 7 }}
-
+						<p>некоторый текст 123</p>
+						<p>некоторый текст 456</p>
+						<p>некоторый текст 789</p>
+						<p>некоторый текст 123</p>
+						<p>некоторый текст 456</p>
+						<p>некоторый текст 789</p>
+						<div style=" display: none;
+						/*показывать это, когда есть переполнение*/
+    background-image: linear-gradient(#ffffff82, #ffffffd9, #ffffff);
+    min-height: 25px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+"></div>
 					</div>
 				</div>
 			</div>
 		</template>
-
-<!--		&#45;&#45;-->
-<!--		<div class="vi-weak">-->
-<!--			<div class="vi-day">-->
-<!--				<div class="vi-day_num">26</div>-->
-<!--				<div class="vi-day_content">-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="vi-day">-->
-<!--				<div class="vi-day_num">27</div>-->
-<!--				<div class="vi-day_content"></div>-->
-<!--			</div>-->
-<!--			<div class="vi-day">-->
-<!--				<div class="vi-day_num">28</div>-->
-<!--				<div class="vi-day_content"></div>-->
-<!--			</div>-->
-<!--			<div class="vi-day">-->
-<!--				<div class="vi-day_num">29</div>-->
-<!--				<div class="vi-day_content"></div>-->
-<!--			</div>-->
-<!--			<div class="vi-day">-->
-<!--				<div class="vi-day_num">30</div>-->
-<!--				<div class="vi-day_content"></div>-->
-<!--			</div>-->
-<!--			<div class="vi-day">-->
-<!--				<div class="vi-day_num">31</div>-->
-<!--				<div class="vi-day_content"></div>-->
-<!--			</div>-->
-<!--			<div class="vi-day">-->
-<!--				<div class="vi-day_num">1</div>-->
-<!--				<div class="vi-day_content"></div>-->
-<!--			</div>-->
-<!--		</div>-->
-
 	</div>
 
 </template>
@@ -83,6 +74,7 @@ export default defineComponent({
 				return new Date();
 			}
 		},
+
 	},
 
 	watch: {
@@ -121,6 +113,23 @@ export default defineComponent({
 			{
 				return <Date>this.date;
 			}
+		},
+		isCurrentMonth()
+		{
+			return (testDate: Date): boolean => testDate.getMonth() == this.getDisplayDate.getMonth();
+		},
+		isCurrentDay()
+		{
+			return (testDate: Date): boolean => {
+				const curDate = new Date();
+				return testDate.getFullYear() == curDate.getFullYear() &&
+					testDate.getMonth() == curDate.getMonth() &&
+					testDate.getDate() == curDate.getDate();
+			};
+		},
+		isWeekEnd()
+		{
+			return (testDate: Date): boolean => [0, 6].indexOf(testDate.getDay()) > -1;
 		}
 	},
 
@@ -145,6 +154,10 @@ export default defineComponent({
 		},
 	},
 
+	beforeMount() {
+		this.dateMatrix = [...this.generateNewMatrix(this.getDisplayDate)];
+	}
+
 })
 </script>
 
@@ -164,6 +177,7 @@ export default defineComponent({
 			border: 1px solid rgba(50,50,50, 0.1);
 			flex: 1;
 			padding: 0.125em;
+			text-transform: capitalize;
 		}
 	}
 	.vi-weak{
@@ -189,6 +203,14 @@ export default defineComponent({
 
 			.vi-day_content{
 				text-align: justify;
+				max-height: 15vh;
+				overflow: hidden;
+				overflow-y: scroll;
+				-ms-overflow-style: none;  /* IE и Edge */
+				scrollbar-width: none;  /* Firefox */
+			}
+			.vi-day_content::-webkit-scrollbar {
+				display: none;
 			}
 		}
 	}

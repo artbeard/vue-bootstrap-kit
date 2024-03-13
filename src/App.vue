@@ -122,7 +122,7 @@ const displayDate = ref<string>()
 		<div class="page-body">
 			<div class="container-xl">
 				<div class="row row-cards mb-3">
-					<div class="col-3">
+					<div class="col-2">
 						<div class="card">
 							<div class="card-body">
 								<div class="mb-3">
@@ -135,7 +135,7 @@ const displayDate = ref<string>()
 						</div>
 
 					</div>
-					<div class="col-9">
+					<div class="col-10">
 						<vi-calendar :date="displayDate"></vi-calendar>
 					</div>
 				</div>
