@@ -24,39 +24,50 @@
 						 'border-azure': isCurrentDay(day)
 				     }"
 				>
+
+					<ViCell>
+						<template v-if="isCurrentDay(day)">
+							<div class="badge badge-outline text-indigo ">
+								Некоторое содержание длинный текст
+							</div>
+							<div class="badge badge-outline text-orange ">
+								Некоторое
+							</div>
+							<div class="badge badge-outline text-green ">
+								Некоторое содержание длинный текст
+							</div>
+							<div class="badge badge-outline text-green ">
+								Некоторое содержание длинный текст
+							</div>
+							<div class="badge badge-outline text-green ">
+								Некоторое содержание длинный текст
+							</div>
+							<div class="badge badge-outline text-green ">
+								Некоторое содержание длинный текст
+							</div>
+							<div class="badge badge-outline text-green ">
+								Некоторое содержание длинный текст
+							</div>
+							<div class="badge badge-outline text-green ">
+								Некоторое содержание длинный текст
+							</div>
+							<div class="badge badge-outline text-green ">
+								Некоторое содержание длинный текст
+							</div>
+							<div class="badge badge-outline text-green ">
+								Некоторое содержание длинный текст
+							</div>
+							<div class="badge badge-outline text-green ">
+								Некоторое содержание длинный текст
+							</div>
+						</template>
+					</ViCell>
 					<div class="vi-day_num">
 						<div class="badge"
-						     :class="{ 'bg-red-lt': isWeekEnd(day), 'bg-dark-lt': !isWeekEnd(day)}"
+						     :class="{ 'vi-bg-red': isWeekEnd(day), 'bg-dark-lt': !isWeekEnd(day)}"
 						>
 							{{day.getDate()}}
 						</div>
-					</div>
-					<div class="vi-day_content ">
-						<template v-if="isCurrentDay(day)">
-							<div style="max-width: 100%; overflow: hidden">
-								<div class="badge badge-outline text-indigo ">
-									Некоторое содержание длинный текст
-								</div>
-								<div class="badge badge-outline text-orange ">
-									Некоторое
-								</div>
-								<div class="badge badge-outline text-green ">
-									Некоторое содержание длинный текст
-								</div>
-							</div>
-
-						</template>
-
-
-						<div style=" display: none;
-						/*показывать это, когда есть переполнение*/
-    background-image: linear-gradient(#ffffff82, #ffffffd9, #ffffff);
-    min-height: 25px;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-"></div>
 					</div>
 				</div>
 			</div>
@@ -68,8 +79,13 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import type { PropType } from 'vue';
+import ViCell from "./vi-cell.vue";
 export default defineComponent({
 	name: 'vi-calendar',
+
+	components: {
+		ViCell
+	},
 
 	data(){ return {
 
@@ -173,6 +189,9 @@ export default defineComponent({
 
 
 <style scoped lang="scss">
+.vi-bg-red{
+	background-color: rgb(251 235 235);
+}
 .vi-calendar{
 	height: calc( 100vh - 180px );
 	display: flex;
@@ -210,29 +229,7 @@ export default defineComponent({
 				right: 5px;
 				top: 5px;
 			}
-
-			.vi-day_content{
-				//display: grid;
-				text-align: justify;
-				max-height: 15vh;
-				overflow: hidden;
-				overflow-y: scroll;
-				-ms-overflow-style: none;  /* IE и Edge */
-				scrollbar-width: none;  /* Firefox */
-
-				div{
-					max-width: 100%;
-					overflow: hidden;
-					text-overflow: ellipsis;
-				}
-			}
-
-			.vi-day_content::-webkit-scrollbar {
-				display: none;
-			}
 		}
 	}
-
-
 }
 </style>
