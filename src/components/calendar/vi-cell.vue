@@ -1,6 +1,6 @@
 <template>
-	<div class="vi-day_content ">
-		<div class="vi-day-content_inner">
+	<div class="vi-day_content" ref="dayContent" @scroll="scroll">
+		<div class="vi-day-content_inner" ref="dayContentInner">
 			<slot></slot>
 		</div>
 	</div>
@@ -19,7 +19,15 @@
 import {defineComponent} from 'vue'
 
 export default defineComponent({
-	name: "vi-cell"
+	name: "vi-cell",
+  methods: {
+    scroll(){
+      console.log(
+          (this.$refs.dayContent as HTMLElement).offsetHeight,
+          (this.$refs.dayContentInner as HTMLElement).offsetHeight
+      )
+    }
+  }
 })
 </script>
 
